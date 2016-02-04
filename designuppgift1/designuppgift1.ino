@@ -41,6 +41,7 @@ void loop() {
   // Make sure state is only changed once if button is held.
   if ((buttonState == LOW) && (oldButtonState != buttonState))
   {
+    // Start/stop the game.
     gameState = !gameState;
 
     // Change game speed.
