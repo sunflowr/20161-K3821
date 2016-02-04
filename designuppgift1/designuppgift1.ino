@@ -17,12 +17,17 @@ int prevMillis = 0;
 int wait = 0;
 
 void setup() {
+  // Make the led pins ouput.
   for (int i = 0; i < 5; i++)
   {
     pinMode(ledPin + i, OUTPUT);
   }
-  pinMode(buttonPin, INPUT);
+
+  // Make the audio pin output.
   pinMode(audioPin, OUTPUT);
+
+  // Make the button pin input.
+  pinMode(buttonPin, INPUT);
 
   // Reset timer.
   prevMillis = millis();
@@ -74,9 +79,12 @@ void loop() {
     }
   }
 
+  // Turn of all the leds.
   for (int i = 0; i < 5; i++)
   {
     digitalWrite(ledPin + i, LOW);
   }
+
+  // Turn on active led.
   digitalWrite(ledPin + activeLed, HIGH);
 }
