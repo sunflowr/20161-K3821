@@ -46,7 +46,7 @@ void loop() {
     // Change game speed.
     if (!gameState)
     {
-      gameSpeed -= 50;
+      gameSpeed -= (gameSpeed / 4);
       if (gameSpeed < 1)
       {
         gameSpeed = 1;
