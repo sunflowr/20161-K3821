@@ -1,20 +1,28 @@
+// Pins.
 const int buttonPin = 2;
 const int ledPin = 8;
 const int audioPin = 3;
 
-unsigned int song[] = { 440, 880, 220, 440, 110 };
-
+// Game state, 0 - stop, 1 - start.
 byte gameState = 0;
+
+// Game speed.
 int gameSpeed = 400;
 
-byte oldButtonState = 0;
-byte buttonState = 0;
+// Currently active LED.
 byte activeLed = 0;
 
-byte audioState = LOW;
-
+// Timer used by the game to calculate speed.
 int prevMillis = 0;
 int wait = 0;
+
+// Button state.
+byte oldButtonState = 0;
+byte buttonState = 0;
+
+// Tone values for the piezo.
+unsigned int song[] = { 440, 880, 220, 440, 110 };
+
 
 void setup() {
   // Make the led pins ouput.
@@ -63,6 +71,7 @@ void loop() {
     wait += ms - prevMillis;
     prevMillis = ms;
 
+    // If it's time to advance to the next LED.
     if (wait > gameSpeed)
     {
       // Reset wait timer.
