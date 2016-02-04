@@ -17,7 +17,7 @@ int prevMillis = 0;
 int wait = 0;
 
 void setup() {
-  for(int i = 0; i < 5; i++)
+  for (int i = 0; i < 5; i++)
   {
     pinMode(ledPin + i, OUTPUT);
   }
@@ -34,42 +34,47 @@ void loop() {
   buttonState = digitalRead(buttonPin);
 
   // Make sure state is only changed once if button is held.
-  if((buttonState == LOW) && (oldButtonState != buttonState))
+  if ((buttonState == LOW) && (oldButtonState != buttonState))
   {
-      gameState = !gameState;
+    gameState = !gameState;
 
-      // Change game speed.
-      if(!gameState)
+    // Change game speed.
+    if (!gameState)
+    {
+      gameSpeed -= 50;
+      if (gameSpeed < 1)
       {
-        gameSpeed -= 50;
-        if(gameSpeed < 1)
-        {
-          gameSpeed = 1;
-        }
+        gameSpeed = 1;
       }
+    }
   }
 
   // Update game state.
-  if(gameState)
+  if (gameState)
   {
     // Handel timer.
     int ms = millis();
     wait += ms - prevMillis;
     prevMillis = ms;
 
-    if(wait > gameSpeed)
+    if (wait > gameSpeed)
     {
-     tone(audioPin, song[activeLed]);
-     wait = 0;
+      // Reset wait timer.
+      wait = 0;
+
+      // Play sound.
+      tone(audioPin, song[activeLed]);
+
+      // Update active led.
       activeLed++;
-      if(activeLed >= 5)
+      if (activeLed >= 5)
       {
         activeLed = 0;
       }
     }
   }
 
-  for(int i = 0; i < 5; i++)
+  for (int i = 0; i < 5; i++)
   {
     digitalWrite(ledPin + i, LOW);
   }
