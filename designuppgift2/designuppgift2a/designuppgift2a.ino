@@ -32,6 +32,9 @@ const byte ledCorrect = 3;
 const byte ledWrong = 4;
 
 void setup() {
+  // Seed the random generator.
+  randomSeed(analogRead(0));
+  
   // Set pin mode.
   pinMode(btnStart, INPUT_PULLUP);
   pinMode(btn1960, INPUT_PULLUP);
