@@ -1,6 +1,11 @@
+// Button state.
 int startTime = 0;
 byte canPress = 1;
+
+// 1 - if currently playing a song, else 0.
 byte playingSong = 0;
+
+// Currently active year.
 byte activeYear = -1;
 
 // Play commands send over to processing.
@@ -41,27 +46,32 @@ void setup() {
   // Start serial.
   Serial.begin(57600);
 
+  // Reset game.
   Reset();
 }
 
 void WrongAnswear()
 {
+  // Light the red LED.
   digitalWrite(ledWrong, HIGH);
   digitalWrite(ledCorrect, LOW);
 }
 
 void CorrectAnswear()
 {
+  // Light the green LED.
   digitalWrite(ledWrong, LOW);
   digitalWrite(ledCorrect, HIGH);
 }
 
 void Reset()
 {
+  // Turn off both LEDs.
   digitalWrite(ledWrong, LOW);
   digitalWrite(ledCorrect, LOW);
 }
 
+// Check if a button is pressed.
 byte PressedButton(byte button)
 {
   // Can't press button until 500ms have passed.
@@ -87,7 +97,9 @@ byte PressedButton(byte button)
   return 0;
 }
 
+// Main loop.
 void loop() {
+  // Check if we should play a new song.
   if(PressedButton(btnStart))
   {    
     // Play/stop song.
@@ -103,6 +115,7 @@ void loop() {
     }
   }
 
+  // Check if 1960 button is pressed.
   if(PressedButton(btn1960))
   {
     if(activeYear == 0)
@@ -118,6 +131,7 @@ void loop() {
     Serial.println("stop:0");
   }
 
+  // Check if 1970 button is pressed.
   if(PressedButton(btn1970))
   {
     if(activeYear == 1)
@@ -133,6 +147,7 @@ void loop() {
     Serial.println("stop:1");
   }
 
+  // Check if 1980 button is pressed.
   if(PressedButton(btn1980))
   {
     if(activeYear == 2)
@@ -148,6 +163,7 @@ void loop() {
     Serial.println("stop:2");
   }
 
+  // Check if 1990 button is pressed.
   if(PressedButton(btn1990))
   {
     if(activeYear == 3)
@@ -163,6 +179,7 @@ void loop() {
     Serial.println("stop:3");
   }
 
+  // Check if 2000 button is pressed.
   if(PressedButton(btn2000))
   {
     if(activeYear == 4)
@@ -178,6 +195,7 @@ void loop() {
     Serial.println("stop:4");
   }
 
+  // Check if 2010 button is pressed.
   if(PressedButton(btn2010))
   {
     if(activeYear == 5)

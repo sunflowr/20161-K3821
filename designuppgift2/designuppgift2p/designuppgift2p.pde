@@ -1,8 +1,13 @@
 import processing.sound.*;
 import processing.serial.*;
 
+// Serial communication object.
 Serial myPort;  
+
+// Sound file objects.
 SoundFile[][] sounds;
+
+// Currently active year and song.
 int activeSongYear = -1;
 int activeSong = -1;
 
@@ -69,6 +74,7 @@ void draw()
   {
     try
     {
+      // Change port name on other computer.
       String portName = Serial.list()[2];
       println(portName);
       myPort = new Serial(this, portName, 57600);
