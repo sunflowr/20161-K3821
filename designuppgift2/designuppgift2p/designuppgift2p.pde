@@ -47,7 +47,7 @@ void PlaySong(int songYear)
   activeSongYear = songYear;
   activeSong = (int)random(0, sounds[activeSongYear].length);
   sounds[activeSongYear][activeSong].play();
-  println("Playing song: " + activeSong);
+  println("Playing song: " + activeSongYear + " " + activeSong);
 }
 
 void StopSong()
@@ -71,7 +71,7 @@ void draw()
     {
       String portName = Serial.list()[2];
       println(portName);
-      myPort = new Serial(this, portName, 9600);
+      myPort = new Serial(this, portName, 57600);
     }
     catch(Exception ex)
     {
@@ -100,6 +100,8 @@ void draw()
       else if(commands[0].compareTo("stop") == 0)
       {
         // Stop song.
+        int songNumber = Integer.parseInt(commands[1]);
+        println("songnumber: " + songNumber);
         StopSong();
       }
       else

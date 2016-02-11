@@ -1,32 +1,47 @@
 int startTime = 0;
 byte canPress = 1;
-byte active = 0;
+byte playingSong = 0;
+byte activeYear = -1;
 
+// Play commands send over to processing.
+const char *playCommands[] = {
+  "play:0", // 1960
+  "play:1", // 1970
+  "play:2", // 1980
+  "play:3", // 1990
+  "play:4", // 2000
+  "play:5"  // 2010
+};
+
+// Button pins.
 const byte btnStart = 13;
-const byte btn1960 = 13;
-const byte btn1970 = 12;
-const byte btn1980 = 11;
-const byte btn1990 = 10;
-const byte btn2000 = 9;
-const byte btn2010 = 8;
+const byte btn1960 = 12;
+const byte btn1970 = 11;
+const byte btn1980 = 10;
+const byte btn1990 = 9;
+const byte btn2000 = 8;
+const byte btn2010 = 7;
 
-const byte ledCorrect = 4;
-const byte ledWrong = 3;
+// LED pins.
+const byte ledCorrect = 3;
+const byte ledWrong = 4;
 
 void setup() {
   // Set pin mode.
-  pinMode(btnStart, INPUT);
-  pinMode(btn1960, INPUT);
-  pinMode(btn1970, INPUT);
-  pinMode(btn1980, INPUT);
-  pinMode(btn1990, INPUT);
-  pinMode(btn2000, INPUT);
-  pinMode(btn2010, INPUT);
+  pinMode(btnStart, INPUT_PULLUP);
+  pinMode(btn1960, INPUT_PULLUP);
+  pinMode(btn1970, INPUT_PULLUP);
+  pinMode(btn1980, INPUT_PULLUP);
+  pinMode(btn1990, INPUT_PULLUP);
+  pinMode(btn2000, INPUT_PULLUP);
+  pinMode(btn2010, INPUT_PULLUP);
   pinMode(ledCorrect, OUTPUT);
   pinMode(ledWrong, OUTPUT);
 
   // Start serial.
-  Serial.begin(9600);
+  Serial.begin(57600);
+
+  Reset();
 }
 
 void WrongAnswear()
@@ -43,8 +58,8 @@ void CorrectAnswear()
 
 void Reset()
 {
-  digitalWrite(4, LOW);
-  digitalWrite(2, LOW);
+  digitalWrite(ledWrong, LOW);
+  digitalWrite(ledCorrect, LOW);
 }
 
 byte PressedButton(byte button)
@@ -76,24 +91,105 @@ void loop() {
   if(PressedButton(btnStart))
   {    
     // Play/stop song.
-    active = !active;
-    if(active)
+    playingSong = !playingSong;
+    if(playingSong)
     {
-      Serial.println("play:1");
-    }
-    else
-    {
-      Serial.println("stop");
+      // Send random year to play.
+      activeYear = random(6);
+      Serial.println(playCommands[activeYear]);
+
+      // Reset game.
+      Reset();
     }
   }
 
   if(PressedButton(btn1960))
   {
-    CorrectAnswear();
+    if(activeYear == 0)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:0");
   }
 
   if(PressedButton(btn1970))
   {
-    WrongAnswear();
+    if(activeYear == 1)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:1");
+  }
+
+  if(PressedButton(btn1980))
+  {
+    if(activeYear == 2)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:2");
+  }
+
+  if(PressedButton(btn1990))
+  {
+    if(activeYear == 3)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:3");
+  }
+
+  if(PressedButton(btn2000))
+  {
+    if(activeYear == 4)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:4");
+  }
+
+  if(PressedButton(btn2010))
+  {
+    if(activeYear == 5)
+    {
+      CorrectAnswear();
+    }
+    else
+    {
+      WrongAnswear();
+    }
+
+    // Send stop command.
+    Serial.println("stop:5");
   }
 }
